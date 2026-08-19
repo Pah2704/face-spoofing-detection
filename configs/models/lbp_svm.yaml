@@ -1,0 +1,32 @@
+model:
+  name: lbp_svm
+  experiment_id: E01
+  score_type: decision_function
+  higher_score_label: 1
+
+feature:
+  image_size: 128
+  grayscale: true
+  resize_interpolation: area
+  method: uniform
+  radius: 1
+  points: 8
+  bins: 10
+  grid_rows: 8
+  grid_cols: 8
+  histogram_normalization: l1_per_cell
+  feature_dim: 640
+  dtype: float32
+
+svm:
+  estimator: LinearSVC
+  standardize: true
+  penalty: l2
+  loss: squared_hinge
+  dual: false
+  class_weight: balanced
+  tolerance: 0.0001
+  max_iterations: 20000
+  c_values: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0]
+  seed: 42
+

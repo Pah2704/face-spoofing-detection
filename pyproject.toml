@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "face-spoofing-detection"
+version = "0.1.0"
+description = "Reproducible OULU-NPU Protocol 1 face spoofing baselines"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+authors = [
+  { name = "Face Spoofing Detection contributors" },
+]
+dependencies = []
+
+[project.optional-dependencies]
+preprocess = [
+  "numpy>=2,<3",
+  "opencv-contrib-python>=4.13,<5",
+  "mediapipe==0.10.14",
+  "Pillow>=12,<13",
+  "PyYAML>=6,<7",
+  "tqdm>=4.67,<5",
+]
+classical = [
+  "scikit-image>=0.25,<0.26",
+  "scikit-learn>=1.7,<2",
+  "joblib>=1.5,<2",
+]
+deep = [
+  "torch==2.5.1",
+  "torchvision==0.20.1",
+]
+report = [
+  "matplotlib>=3.10,<4",
+  "pandas>=2.3,<4",
+  "seaborn>=0.13,<1",
+]
+dev = [
+  "coverage>=7,<8",
+]
+all = [
+  "numpy>=2,<3",
+  "opencv-contrib-python>=4.13,<5",
+  "mediapipe==0.10.14",
+  "Pillow>=12,<13",
+  "PyYAML>=6,<7",
+  "tqdm>=4.67,<5",
+  "scikit-image>=0.25,<0.26",
+  "scikit-learn>=1.7,<2",
+  "joblib>=1.5,<2",
+  "torch==2.5.1",
+  "torchvision==0.20.1",
+  "matplotlib>=3.10,<4",
+  "pandas>=2.3,<4",
+  "seaborn>=0.13,<1",
+]
+
+[project.scripts]
+face-spoofing = "face_spoofing.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["face_spoofing*"]
+
+[tool.coverage.run]
+branch = true
+source = ["face_spoofing"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

@@ -1,0 +1,35 @@
+model:
+  name: rgb_lbp_svm
+  experiment_id: E05
+  score_type: decision_function
+  higher_score_label: 1
+
+feature:
+  image_size: 128
+  color_mode: rgb
+  channel_order: [R, G, B]
+  channel_fusion: feature_concatenation
+  resize_interpolation: area
+  method: rotation_invariant_uniform_lbp
+  radius: 1
+  points: 8
+  bins_per_channel: 10
+  grid_rows: 8
+  grid_cols: 8
+  histogram_normalization: l1_per_cell_per_channel
+  feature_dim_per_channel: 640
+  feature_dim: 1920
+  dtype: float32
+
+svm:
+  estimator: LinearSVC
+  standardize: true
+  standardizer_fit_split: train
+  penalty: l2
+  loss: squared_hinge
+  dual: false
+  class_weight: balanced
+  tolerance: 0.0001
+  max_iterations: 20000
+  c_values: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0]
+  seed: 42
