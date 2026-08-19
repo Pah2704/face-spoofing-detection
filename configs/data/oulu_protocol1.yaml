@@ -1,0 +1,86 @@
+dataset: oulu_npu
+
+paths:
+  raw_root: data/raw/oulu_npu
+  protocol_dir: data/raw/oulu_npu/Protocols/Protocol_1
+  archives:
+    train: data/raw/oulu_npu/Train_files.tar
+    dev: data/raw/oulu_npu/Dev_files.tar
+    test: data/raw/oulu_npu/Test_files.tar
+    protocols: data/raw/oulu_npu/Protocols.tar
+  extracted_dirs:
+    train: data/raw/oulu_npu/Train_files
+    dev: data/raw/oulu_npu/Dev_files
+    test: data/raw/oulu_npu/Test_files
+  protocol_files:
+    train: data/raw/oulu_npu/Protocols/Protocol_1/Train.txt
+    dev: data/raw/oulu_npu/Protocols/Protocol_1/Dev.txt
+    test: data/raw/oulu_npu/Protocols/Protocol_1/Test.txt
+  video_manifest: data/manifests/videos_protocol1.csv
+  frame_manifest: data/manifests/frames_protocol1.csv
+  validation_report: data/manifests/validation_protocol1.json
+  frames_dir: data/interim/frames
+  faces_dir: data/processed/faces
+  quality_control_dir: data/quality_control
+
+protocol:
+  number: 1
+  name: protocol_1
+
+expected_counts:
+  train:
+    total: 1200
+    live: 240
+    spoof: 960
+  dev:
+    total: 900
+    live: 180
+    spoof: 720
+  test:
+    total: 600
+    live: 120
+    spoof: 480
+
+labels:
+  live: 0
+  spoof: 1
+  positive_class: spoof
+  official_live_token: "+1"
+  official_attack_tokens: ["-1", "-2"]
+
+sampling:
+  strategy: uniform
+  frames_per_video: 10
+  deterministic: true
+  include_first_frame: true
+  include_last_frame: true
+  keep_sampled_frames: false
+
+detector:
+  name: mediapipe
+  margin: 0.2
+  model_selection: 0
+  min_detection_confidence: 0.5
+  detection_max_side: 640
+  retry_full_resolution: true
+  fallback: none
+
+face_cache:
+  output_size: 256
+  format: png
+  png_compression: 3
+  directory_layout: protocol_1/video_id
+
+runtime:
+  preprocessing_workers: 4
+  seed: 42
+
+validation:
+  raw_data_immutable: true
+  keep_archives: true
+  require_disjoint_video_ids: true
+  require_disjoint_subjects: true
+  require_readable_videos: true
+  reject_unlisted_protocol_videos: false
+  minimum_face_detection_rate: 0.98
+  require_exact_frames_per_video: true

@@ -1,0 +1,33 @@
+model:
+  name: resnet18_finetune_layer4
+  architecture: resnet18
+  experiment_id: E04
+  torchvision_weights: IMAGENET1K_V1
+  output_dim: 1
+  score_type: logit
+  loss: BCEWithLogitsLoss
+  negative_label: 0
+  positive_label: 1
+  higher_score_label: 1
+
+training_policy:
+  frozen_stages: [stem, layer1, layer2, layer3]
+  trainable_stages: [layer4, classifier]
+  batch_norm: layer4_trainable_earlier_frozen
+  head_learning_rate: 0.0001
+  layer4_learning_rate: 0.00001
+
+preprocessing:
+  input_channels: 3
+  resize_size: [224, 224]
+  resize_policy: direct_square
+  interpolation: bilinear
+  antialias: true
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+checkpoint:
+  format: state_dict
+  format_version: 1
+  restore_without_weights_download: true
+  preserve_trainable_backbone_blocks: true

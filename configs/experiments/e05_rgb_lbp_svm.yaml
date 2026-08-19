@@ -1,0 +1,45 @@
+experiment:
+  id: E05
+  purpose: grayscale_lbp_vs_rgb_lbp_ablation
+  model: rgb_lbp_svm
+  protocol: 1
+  frame_manifest: data/manifests/frames_protocol1.csv
+  feature_cache_root: data/processed/features/rgb_lbp
+  run_root: artifacts/runs/rgb_lbp_svm
+
+selection:
+  train_split: train
+  development_split: dev
+  test_split: test
+  primary_level: video
+  aggregation: mean_decision_score
+  threshold_objective: [acer, apcer, threshold]
+  model_objective: [acer, apcer, negative_f1, C]
+  refit_train_plus_dev: false
+
+evaluation:
+  positive_class: spoof
+  positive_label: 1
+  frame_threshold: select_on_dev_frames
+  video_threshold: select_on_dev_videos
+  report_frame_at_video_threshold: true
+  test_used_for_selection: false
+
+expected_coverage:
+  train_frames: 12000
+  dev_frames: 8999
+  test_frames: 6000
+  dev_videos: 900
+  test_videos: 600
+
+comparison:
+  reference_experiment: E01
+  controlled_factors:
+    - protocol_and_split
+    - sampled_frames_and_face_crops
+    - image_size
+    - lbp_radius_points_bins_and_grid
+    - histogram_normalization
+    - scaler_svm_and_c_grid
+    - seed_threshold_aggregation_and_metrics
+  only_changed_factor: grayscale_640d_to_rgb_channelwise_1920d

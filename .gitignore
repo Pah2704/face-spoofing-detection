@@ -1,0 +1,45 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# IDE, OS, and temporary office files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.~lock.*
+~$*
+
+# OULU-NPU data and reproducible generated caches
+data/raw/
+data/interim/
+data/processed/
+data/manifests/
+data/quality_control/
+
+# Reproducible experiment runs (metrics, figures, snapshots, and weights)
+artifacts/runs/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+
+# Downloaded packages and archives
+*.deb
+*.tar
+*.tar.gz
+*.tgz
+
+# Copyrighted reference books and course materials
+/Book 2011 - Handbook of Face Recognition 2nd Edition.pdf
+/Handbook of Biometrics.pdf
+/Bai_giang_nhan_dang/

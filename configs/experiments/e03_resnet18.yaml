@@ -1,0 +1,43 @@
+experiment:
+  id: E03
+  model: resnet18
+  protocol: 1
+  frame_manifest: data/manifests/frames_protocol1.csv
+  run_root: artifacts/runs/resnet18
+
+training:
+  pretrained_weights: IMAGENET1K_V1
+  backbone: frozen
+  classifier_output: one_spoof_logit
+  loss: BCEWithLogitsLoss
+  positive_weight: train_live_frames_over_spoof_frames
+  optimizer: Adam
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  batch_size: 16
+  maximum_epochs: 15
+  minimum_epochs: 3
+  early_stopping_patience: 3
+  amp: false
+  seed: 42
+
+transforms:
+  train: [direct_resize_224, horizontal_flip_0.5, imagenet_normalize]
+  dev_test: [direct_resize_224, imagenet_normalize]
+
+selection:
+  checkpoint_split: dev
+  checkpoint_level: video
+  checkpoint_objective: [acer, apcer, negative_f1, epoch]
+  aggregation: mean_spoof_probability
+  primary_threshold: dev_min_acer
+  secondary_threshold: dev_vlfeat_eer_compatible
+  refit_train_plus_dev: false
+  test_used_for_selection: false
+
+expected_coverage:
+  train_frames: 12000
+  dev_frames: 8999
+  test_frames: 6000
+  dev_videos: 900
+  test_videos: 600

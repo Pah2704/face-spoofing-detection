@@ -1,0 +1,86 @@
+{
+  "scope": {
+    "input": "one processed face crop per test video (sample_index=0)",
+    "frames": 600,
+    "subset_video_ids_sha256": "9f675f0e4b9733a002888c6471e046e08f4e85af6bc31c9d5c32b86ad5402c48",
+    "batch_size": 16,
+    "workers": 4,
+    "repeats": 3,
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 3060"
+  },
+  "models": {
+    "LBP-SVM": {
+      "path": "artifacts/runs/lbp_svm/e01_20260712_lbp_svm_seed42_verified/model/lbp_svm.joblib",
+      "sha256": "b28d8951b82a96adb83a6789b9f484aef9c25380925c187b5e0dc02c5421ebe6",
+      "pure_batch1": {
+        "batch_size": 1,
+        "iterations": 1000,
+        "seconds_per_frame": 0.00016325223800004097
+      },
+      "pure_batch16": {
+        "batch_size": 16,
+        "iterations": 1000,
+        "seconds_per_frame": 1.1303923000014039e-05
+      }
+    },
+    "MobileNetV2": {
+      "path": "artifacts/runs/mobilenet_v2/e02_20260712_mobilenet_v2_seed42/model/best.pt",
+      "sha256": "593ed5e55ab0c20edcda919bd96350efcf29e8cc1c9ca87b95f01bb161da6201",
+      "pure_batch1": {
+        "batch_size": 1,
+        "iterations": 100,
+        "seconds_per_frame": 0.003247193489999063
+      },
+      "pure_batch16": {
+        "batch_size": 16,
+        "iterations": 100,
+        "seconds_per_frame": 0.000647532134374984
+      }
+    },
+    "ResNet18": {
+      "path": "artifacts/runs/resnet18/e03_20260713_resnet18_seed42/model/best.pt",
+      "sha256": "e14135642bef031c15e81a9baf504216f4cf67442260c39426e1988c4de2c689",
+      "pure_batch1": {
+        "batch_size": 1,
+        "iterations": 100,
+        "seconds_per_frame": 0.0015945538200003283
+      },
+      "pure_batch16": {
+        "batch_size": 16,
+        "iterations": 100,
+        "seconds_per_frame": 0.0005930237324999155
+      }
+    }
+  },
+  "end_to_end_from_crop": {
+    "LBP-SVM": {
+      "seconds": [
+        0.439726434000022,
+        0.4437920049999775,
+        0.42373668300001555
+      ],
+      "median_seconds": 0.439726434000022,
+      "median_seconds_per_frame": 0.0007328773900000367
+    },
+    "MobileNetV2": {
+      "seconds": [
+        0.5916307869999855,
+        0.5944376820000343,
+        0.6015457260000403
+      ],
+      "median_seconds": 0.5944376820000343,
+      "median_seconds_per_frame": 0.0009907294700000572
+    },
+    "ResNet18": {
+      "seconds": [
+        0.5688899990000209,
+        0.5793966050000563,
+        0.5842094820000057
+      ],
+      "median_seconds": 0.5793966050000563,
+      "median_seconds_per_frame": 0.0009656610083334272
+    }
+  },
+  "caveat": "LBP runs on CPU with threaded feature extraction; CNNs run on GPU. Results describe this machine, not mobile/CPU deployment."
+}
